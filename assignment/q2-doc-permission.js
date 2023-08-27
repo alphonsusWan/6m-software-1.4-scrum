@@ -73,3 +73,27 @@ class Permission{
 }
 
 // Add code here
+class Document extends Permission {
+    #content;
+
+    constructor(role, operation, content) {
+        super(role, operation);  // Pass role and operation to the parent's constructor
+        this.#content = content;  // Store content in a private variable
+    }
+
+    process() {
+        return this.check() ? "Allowed" : "Blocked";  // If check() is true, return "Allowed", else return "Blocked"
+    }
+}
+
+// Scenario 1
+const d1 = new Document(Permission.RolesConst.EDITOR, Permission.OperationsConst.UPDATE, "Hello content");
+console.log(d1.process()); // "Allowed"
+
+// Scenario 2
+const d2 = new Document(Permission.RolesConst.READER, Permission.OperationsConst.UPDATE, "Hello content");
+console.log(d2.process()); // "Blocked"
+
+// Scenario 3
+const d3 = new Document(Permission.RolesConst.OWNER, Permission.OperationsConst.DELETE, "Hello content");
+console.log(d3.process()); // "Allowed"
